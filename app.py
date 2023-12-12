@@ -1,17 +1,13 @@
-import pyrogram
-from pyrogram import Client
-import time
-from configparser import ConfigParser
+def read_and_write_to_set(input_filename, output_filename):
+    # Читаем строки из файла и добавляем их в множество
+    with open(input_filename, 'r') as file:
+        lines = file.readlines()
+        site_set = set(map(str.strip, lines))
 
-cfg = ConfigParser()
-cfg.read('config.ini')
-api_id = cfg.get("tg_keys", "api_id")
-api_hash = cfg.get("tg_keys", "api_hash")
-client = Client("Garage", api_id=api_id, api_hash=api_hash)
-group_info = client.get_chat("-4025370246")
-input()
-print(type(group_info))
+    # Записываем множество в новый файл
+    with open(output_filename, 'w') as output_file:
+        for site in site_set:
+            output_file.write(f'{site}\n')
 
-
-if __name__ == '__main__':
-    client.run()
+if __name__ == "__main__":
+    read_and_write_to_set('sites.txt', 'true_sites.txt')
